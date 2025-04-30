@@ -1,0 +1,26 @@
+name: Pool Lock
+description: Acquire or release a Concourse pool lock from GitHub Actions
+author: sandipndev
+
+# Define your inputs here.
+inputs:
+  pool:
+    description: name of the folder (pool)
+    required: true
+  resource:
+    description: name of the exact resource in pool
+    required: true
+  git_uri:
+    description: pool git repo uri
+    required: true
+  git_branch:
+    description: pool git repo branch
+    default: main
+  git_ssh_key:
+    description: ssh key to read/write into git_uri repo
+    required: true
+
+runs:
+  using: node20
+  main: dist/index.js
+  post: dist/post.js
