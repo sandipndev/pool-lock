@@ -5,6 +5,11 @@ const RETRY_DELAY = 10
 
 export async function run() {
   try {
+    if (core.getState('claimed') !== 'true') {
+      core.info('we did not claim, skipping release step.')
+      return
+    }
+
     const pool = core.getInput('pool', { required: true })
     const resource = core.getInput('resource', { required: true })
     const gitUri = core.getInput('git_uri', { required: true })

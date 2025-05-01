@@ -97,6 +97,8 @@ async function run() {
     // run the whole thing in one shell so ssh-agent, env, etc. all persist,
     // and exec.exec will stream stdout/stderr live by default
     await execExports.exec('bash', ['-lc', fullScript]);
+
+    coreExports.saveState('claimed', 'true');
   } catch (err) {
     coreExports.setFailed(err.message);
   }

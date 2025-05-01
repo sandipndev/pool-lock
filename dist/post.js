@@ -33,6 +33,11 @@ const RETRY_DELAY = 10;
 
 async function run() {
   try {
+    if (coreExports.getState('claimed') !== 'true') {
+      coreExports.info('we did not claim, skipping release step.');
+      return
+    }
+
     const pool = coreExports.getInput('pool', { required: true });
     const resource = coreExports.getInput('resource', { required: true });
     const gitUri = coreExports.getInput('git_uri', { required: true });

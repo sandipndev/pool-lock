@@ -11,7 +11,7 @@ git
   with:
     pool: mac
     resource: mac-m4
-    git_uri: git@github.com:atx-finance/ci.git
+    git_uri: git@github.com:yourrepo/ci.git
     git_branch: pool
     git_ssh_key: ${{ secrets.CUSTOM_SSH_KEY_FOR_POOL_REPO_ACCESS }}
 ```

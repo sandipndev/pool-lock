@@ -25,3 +25,7 @@ runs:
   main: dist/main.js
   post: dist/post.js
   post-if: always()
+
+branding:
+  icon: lock
+  color: blue

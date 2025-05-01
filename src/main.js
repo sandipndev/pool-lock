@@ -69,6 +69,8 @@ export async function run() {
     // run the whole thing in one shell so ssh-agent, env, etc. all persist,
     // and exec.exec will stream stdout/stderr live by default
     await exec.exec('bash', ['-lc', fullScript])
+
+    core.saveState('claimed', 'true')
   } catch (err) {
     core.setFailed(err.message)
   }
