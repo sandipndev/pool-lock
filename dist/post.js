@@ -58,6 +58,8 @@ async function run() {
       git config --global user.name "GitHub Action"
       git config --global user.email "actions@github.com"
 
+      export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new"
+
       random_dir="$(mktemp -d)"
       pushd "$random_dir"
 
