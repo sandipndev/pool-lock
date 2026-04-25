@@ -4,7 +4,7 @@ GitHub Action that performs cross run concurrent pool locking - interoperable
 with [Concourse Pool](https://github.com/concourse/pool-resource) resource via
 git
 
-### Usage
+## Usage
 
 ```yaml
 - uses: sandipndev/pool-lock@0.0.1
@@ -16,11 +16,11 @@ git
     git_ssh_key: ${{ secrets.CUSTOM_SSH_KEY_FOR_POOL_REPO_ACCESS }}
 ```
 
-### Pool Repo Structure
+## Pool Repo Structure
 
 The pool repo should have the following structure:
 
-```
+```text
 ${pool}/
     claimed/
         .gitkeep
