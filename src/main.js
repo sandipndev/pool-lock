@@ -25,22 +25,24 @@ export async function run() {
       git config --global user.name "GitHub Action"
       git config --global user.email "actions@github.com"
 
-      export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new"
+      mkdir -p /tmp/.ssh-cm
+      export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new -o ControlMaster=auto -o ControlPath=/tmp/.ssh-cm/%r@%h:%p -o ControlPersist=60s"
 
       random_dir="$(mktemp -d)"
       pushd "$random_dir"
 
-      # —— 2) Clone —— 
-      git clone -b "${gitBranch}" --single-branch "${gitUri}" pool-lock
+      # —— 2) Clone (shallow, blobless, sparse to the target pool) ——
+      git clone --depth=1 --filter=blob:none --sparse -b "${gitBranch}" "${gitUri}" pool-lock
       pushd pool-lock
+      git sparse-checkout set --cone "${pool}"
 
-      # —— 3) claim —— 
+      # —— 3) claim ——
       pushd "${pool}"
       UNCLAIMED="unclaimed/${resource}"
       CLAIMED="claimed/${resource}"
 
       claim() {
-        git fetch origin "${gitBranch}"
+        git fetch --depth=1 origin "${gitBranch}"
         git reset --hard "origin/${gitBranch}"
 
         if mv "$UNCLAIMED" "$CLAIMED" 2>/dev/null; then
